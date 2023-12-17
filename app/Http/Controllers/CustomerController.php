@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -11,7 +13,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::all();
+        return view('customers.index', compact('customers'));
     }
 
     /**
@@ -19,7 +22,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -27,7 +30,12 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->phone_number = $request->phone_number;
+        $customer->save();
+        return redirect()->route('customer.index')->with('success', 'Success add new customer'); 
     }
 
     /**
@@ -35,7 +43,8 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $customer = Customer::find($id);
+        return view('customers.show', compact('customer'));
     }
 
     /**
@@ -51,7 +60,12 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->phone_number = $request->phone_number;
+        $customer->save();
+        return redirect()->route('customer.show', $id)->with('success', 'Success update customer data'); 
     }
 
     /**
@@ -59,6 +73,16 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $customer = Customer::find($id);
+            $customer->delete();
+
+            DB::commit();
+            return redirect()->route('customer.index')->with('success', 'Success delete customer'); 
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors("Unable to delete a customer because the customer data is already connected to other data");
+        }
     }
 }

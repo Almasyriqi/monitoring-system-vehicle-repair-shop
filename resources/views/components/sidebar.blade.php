@@ -64,7 +64,7 @@
                 {{-- Data Management --}}
                 <div class="menu-item">
                     <a class="menu-link {{ Route::is('customer.*') ? 'active' : '' }}" href="
-                                    {{-- {{ route('wisuda.index') }} --}}
+                                    {{ route('customer.index') }}
                                     ">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
