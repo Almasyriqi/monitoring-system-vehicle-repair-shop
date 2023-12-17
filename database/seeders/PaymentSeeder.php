@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Imports\PaymentImport;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentSeeder extends Seeder
 {
@@ -12,6 +14,6 @@ class PaymentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Excel::import(new PaymentImport, public_path("data/payments.xlsx"));
     }
 }

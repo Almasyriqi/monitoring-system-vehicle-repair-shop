@@ -5,11 +5,8 @@
         <a href="
         {{-- {{ route('home') }} --}}
         ">
-            <img alt="Logo"
-                src="{{ asset('assets/images/logo-text.webp') }}"
-                class="h-50px app-sidebar-logo-default" />
-            <img alt="Logo"
-                src="{{ asset('assets/images/logo-repair.webp') }}"
+            <img alt="Logo" src="{{ asset('assets/images/logo-text.webp') }}" class="h-50px app-sidebar-logo-default" />
+            <img alt="Logo" src="{{ asset('assets/images/logo-repair.webp') }}"
                 class="h-30px app-sidebar-logo-minimize" />
         </a>
         <div id="kt_app_sidebar_toggle"
@@ -66,7 +63,7 @@
 
                 {{-- Data Management --}}
                 <div class="menu-item">
-                    <a class="menu-link {{ Route::is('wisuda.*') ? 'active' : '' }}" href="
+                    <a class="menu-link {{ Route::is('customer.*') ? 'active' : '' }}" href="
                                     {{-- {{ route('wisuda.index') }} --}}
                                     ">
                         <span class="menu-icon">
@@ -82,27 +79,52 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="menu-title">Wisuda</span>
+                        <span class="menu-title">Customer Data</span>
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link {{ Route::is('jurusan.*') ? 'active' : '' }}" href="
+                    <a class="menu-link {{ Route::is('mechanic.*') ? 'active' : '' }}" href="
                                     {{-- {{ route('jurusan.index') }} --}}
                                     ">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-person-gear" viewBox="0 0 16 16">
                                     <path
-                                        d="M17.7077 15.4378L10.8743 18.1878C10.291 18.4378 9.70768 18.4378 9.12435 18.1878L2.29102 15.4378C1.45768 15.1045 1.45768 13.9378 2.29102 13.6045L3.37434 13.1878L8.54102 15.2711C9.04102 15.4378 9.54102 15.5211 10.041 15.5211C10.541 15.5211 11.041 15.4378 11.541 15.2711L16.7077 13.1878L17.791 13.6045C18.6243 13.9378 18.6243 15.1045 17.7077 15.4378ZM10.8743 13.6878L17.7077 10.9378C18.541 10.6045 18.541 9.43781 17.7077 9.10448L10.8743 6.35449C10.291 6.10449 9.70768 6.10449 9.12435 6.35449L2.29102 9.10448C1.45768 9.43781 1.45768 10.6045 2.29102 10.9378L9.12435 13.6878C9.70768 13.9378 10.3743 13.9378 10.8743 13.6878Z"
-                                        fill="#E3E4EA" />
-                                    <path
-                                        d="M9.20835 9.18783L2.375 6.43783C1.54167 6.10449 1.54167 4.93783 2.375 4.60449L9.20835 1.85449C9.79168 1.60449 10.375 1.60449 10.9583 1.85449L17.7917 4.60449C18.625 4.93783 18.625 6.10449 17.7917 6.43783L10.875 9.18783C10.375 9.43783 9.70835 9.43783 9.20835 9.18783Z"
-                                        fill="#A1A5B7" />
+                                        d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
                                 </svg>
                             </span>
                         </span>
-                        <span class="menu-title">Jurusan</span>
+                        <span class="menu-title">Mechanic Data</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Route::is('part.*') ? 'active' : '' }}" href="
+                                    {{-- {{ route('jurusan.index') }} --}}
+                                    ">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+                                    <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z"/>
+                                  </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Spare Parts Data</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Route::is('repair.*') ? 'active' : '' }}" href="
+                                    {{-- {{ route('jurusan.index') }} --}}
+                                    ">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-wrench-adjustable" viewBox="0 0 16 16">
+                                    <path d="M16 4.5a4.492 4.492 0 0 1-1.703 3.526L13 5l2.959-1.11c.027.2.041.403.041.61"/>
+                                    <path d="M11.5 9c.653 0 1.273-.139 1.833-.39L12 5.5 11 3l3.826-1.53A4.5 4.5 0 0 0 7.29 6.092l-6.116 5.096a2.583 2.583 0 1 0 3.638 3.638L9.908 8.71A4.49 4.49 0 0 0 11.5 9m-1.292-4.361-.596.893.809-.27a.25.25 0 0 1 .287.377l-.596.893.809-.27.158.475-1.5.5a.25.25 0 0 1-.287-.376l.596-.893-.809.27a.25.25 0 0 1-.287-.377l.596-.893-.809.27-.158-.475 1.5-.5a.25.25 0 0 1 .287.376M3 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Repair Data</span>
                     </a>
                 </div>
                 <hr>

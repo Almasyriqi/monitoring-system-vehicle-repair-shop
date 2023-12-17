@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Imports\VehicleImport;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VehicleSeeder extends Seeder
 {
@@ -12,6 +14,6 @@ class VehicleSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Excel::import(new VehicleImport, public_path("data/vehicles.xlsx"));
     }
 }

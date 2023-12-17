@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('role', ['car', 'motorbike']); 
+            $table->enum('type', ['car', 'motorbike']); 
             $table->integer('stock');
             $table->double('price')->comment('price per stock');
             $table->timestamps();

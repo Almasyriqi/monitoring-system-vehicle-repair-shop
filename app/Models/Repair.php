@@ -9,7 +9,10 @@ class Repair extends Model
 {
     use HasFactory;
 
+    protected $table='repairs';
+
     protected $fillable = [
+        'id',
         'vehicle_id',
         'mechanic_id',
         'issue',

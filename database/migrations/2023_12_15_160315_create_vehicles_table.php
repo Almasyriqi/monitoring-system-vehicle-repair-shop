@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers'); 
             $table->string('model');
             $table->string('color');
-            $table->enum('role', ['car', 'motorbike']); 
+            $table->enum('type', ['car', 'motorbike']); 
             $table->string('plat_number');
             $table->timestamps();
         });
