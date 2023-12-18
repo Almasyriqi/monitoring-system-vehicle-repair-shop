@@ -44,7 +44,7 @@
         <div class="card-body fs-6 text-gray-700">
             @if ($errors->any())
             <div class="alert alert-danger">
-                <strong>Whoops!</strong> Ada beberapa masalah dengan input Anda.<br><br>
+                <strong>Whoops!</strong> There are some problems with your input.<br><br>
                 <ul>
                     @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>

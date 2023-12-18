@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'Add Customer')
+@section('title', 'Detail Mechanic')
 @section('page-title')
 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 w-100   ">
     <h1 class="page-heading d-flex text-dark fw-bold flex-column justify-content-center my-0">
-        Add Customer Data
+        Detail Mechanic Data
     </h1>
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap p-0">
         <!--begin::Info-->
@@ -13,15 +13,20 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('customer.index') }}" class="text-muted">Customer Data &nbsp;</a>
+                        <a href="{{ route('mechanic.index') }}" class="text-muted">Mechanic Data &nbsp;</a>
                     </li>
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('customer.create') }}" class="text-muted">Add Customer &nbsp;</a>
+                        <a href="{{ route('mechanic.show', $mechanic->id) }}" class="text-muted">Detail mechanic &nbsp;</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
             </div>
             <!--end::Page Heading-->
+        </div>
+        <div class="d-flex align-items-center gap-2 gap-lg-3">
+            <button type="button" class="btn btn-sm btn-primary" id="edit">
+                <i class="bi bi-pencil-fill"></i> Edit
+            </button>
         </div>
         <!--end::Info-->
         <!--begin::Toolbar-->
@@ -30,8 +35,9 @@
 @endsection
 @section('content')
 <div class="card card-flush">
-    <form action="{{route('customer.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('mechanic.update', $mechanic->id)}}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="card-body fs-6 text-gray-700">
             @if ($errors->any())
             <div class="alert alert-danger">
@@ -45,13 +51,12 @@
             @endif
 
             <div class="mb-5">
-                <Label class="form-label required fs-6 fw-bold mt-2 mb-3">Customer name</Label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="input customer name"
-                    value="{{old('name')}}" required>
-            </div>
-
-            <div class="mb-5">
                 <div class="row">
+                    <div class="col-md-6">
+                        <Label class="form-label required fs-6 fw-bold mt-2 mb-3">Mechanic name</Label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="input mechanic name"
+                            value="{{$mechanic->name}}" required disabled>
+                    </div>
                     <div class="col-md-6">
                         <Label class="form-label required fs-6 fw-bold mt-2 mb-3">Email</Label>
                         <div class="input-group">
@@ -65,36 +70,22 @@
                                 </svg>
                             </span>
                             <input type="text" class="form-control" id="email" name="email" placeholder="Input email"
-                                required aria-describedby="basic-addon3" value="{{old('email')}}" />
+                                required aria-describedby="basic-addon3" value="{{$mechanic->email}}" disabled/>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <Label class="form-label required fs-6 fw-bold mt-2 mb-3">Phonenumber</Label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-whatsapp" viewBox="0 0 16 16">
-                                    <path
-                                        d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
-                                </svg>
-                            </span>
-                            <input type="text" class="form-control" name="phone_number" id="phone_number"
-                                placeholder="Input phonenumber" value="{{old('phone_number')}}" required>
-                        </div>
-                        <!--begin::Hint-->
-                        <div class="text-muted">
-                            contoh : +6282233445566
-                        </div>
-                        <!--end::Hint-->
                     </div>
                 </div>
             </div>
 
+            <div class="mb-5">
+                <Label class="form-label required fs-6 fw-bold mt-2 mb-3">Expertise</Label>
+                <textarea name="expertise" id="expertise" class="form-control" disabled required placeholder="Input mechanic expertise">{{{$mechanic->expertise}}}</textarea>
+            </div>
+
             <div class="footer d-flex justify-content-end py-10">
                 <div class="d-flex justify-content-end">
-                    <a href="{{route('customer.index')}}" id="cancelButton"
-                        class="btn btn-light btn-active-light-primary me-3">Batalkan</a>
-                    <button id="save-customer" type="submit" class="btn btn-active-primary btn-primary"
+                    <button id="cancelButton" type="button"
+                        class="btn btn-light btn-active-light-primary me-3">Batalkan</button>
+                    <button id="save-mechanic" type="submit" class="btn btn-active-primary btn-primary"
                         data-kt-indicator="off">
                         <span class="indicator-label">
                             Save
@@ -106,3 +97,40 @@
     </form>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+
+    // function for enable edit form
+    const enableForm = () => {
+        $('#edit').hide();
+        $('#name').attr('disabled', false);
+        $('#email').attr('disabled', false);
+        $('#expertise').attr('disabled', false);
+        $('#cancelButton').show();
+        $('#save-mechanic').show();
+    }
+
+    // function for disable edit form
+    const disableForm = () => {
+        $('#edit').show();
+        $('#name').attr('disabled', true);
+        $('#email').attr('disabled', true);
+        $('#expertise').attr('disabled', true);
+        $('#cancelButton').hide();
+        $('#save-mechanic').hide();
+    }
+
+    $(document).ready(function(){
+        disableForm();
+    });
+
+    $('#edit').on('click', function(){
+        enableForm();
+    });
+
+    $('#cancelButton').on('click', function(){
+        disableForm();
+    });
+</script>
+@endpush

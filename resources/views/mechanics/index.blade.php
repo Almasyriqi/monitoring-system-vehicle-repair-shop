@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'Customer Data')
+@section('title', 'Mechanic Data')
 @section('page-title')
 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 w-100   ">
     <h1 class="page-heading d-flex text-dark fw-bold flex-column justify-content-center my-0">
-        Customer Data
+        Mechanic Data
     </h1>
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap p-0">
         <!--begin::Info-->
@@ -13,7 +13,7 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{route('customer.index')}}" class="text-muted">Customer Data &nbsp;</a>
+                        <a href="{{route('mechanic.index')}}" class="text-muted">Mechanic Data &nbsp;</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -32,7 +32,7 @@
         <div class="card card-flush">
             <div class="card-header">
                 <div class="card-toolbar flex-row-fluid justify-content-start gap-5">
-                    <a href="{{route('customer.create')}}" id="addButton" class="btn btn-active-primary btn-primary ms-2 mt-5">
+                    <a href="{{route('mechanic.create')}}" id="addButton" class="btn btn-active-primary btn-primary ms-2 mt-5">
                         <span class="svg-icon svg-icon-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none">
@@ -40,7 +40,7 @@
                                     transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect>
                                 <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"></rect>
                             </svg></span>
-                        Add Customer
+                        Add Mechanic
                     </a>
                 </div>
             </div>
@@ -49,17 +49,17 @@
                     <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>Name</th>
-                            <th>Phonenumber</th>
                             <th>Email</th>
+                            <th>Expertise</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="fw-semibold fs-7 text-gray-600">
-                        @foreach ($customers as $item)
+                        @foreach ($mechanics as $item)
                         <tr class="text-start">
                             <td>{{$item->name}}</td>
-                            <td>{{$item->phone_number}}</td>
                             <td>{{$item->email}}</td>
+                            <td>{{$item->expertise}}</td>
                             <td>
                                 <div class="dropdown text-start">
                                     <button type="button"
@@ -81,8 +81,8 @@
 
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <a href="{{route('customer.show', $item->id)}}" class="menu-link px-3">
-                                                Detail Customer
+                                            <a href="{{route('mechanic.show', $item->id)}}" class="menu-link px-3">
+                                                Detail mechanic
                                             </a>
                                         </div>
                                         <!--end::Menu item-->
@@ -93,7 +93,7 @@
 
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <form action="{{route('customer.destroy', $item->id)}}" method="post" class="delete-form">
+                                            <form action="{{route('mechanic.destroy', $item->id)}}" method="post" class="delete-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 {{-- <button type="submit" class="menu-link px-3">Delete</button> --}}
@@ -135,8 +135,8 @@
                     confirmButton: 'btn btn-danger',
                     cancelButton: 'btn btn-light'
                 },
-                title: "Customer will be deleted",
-                text: "Are you sure you want to delete the selected customer? Data that has been deleted cannot be recovered.",
+                title: "mechanic will be deleted",
+                text: "Are you sure you want to delete the selected mechanic? Data that has been deleted cannot be recovered.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Delete',

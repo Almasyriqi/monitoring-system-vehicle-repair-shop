@@ -84,7 +84,7 @@
                 </div>
                 <div class="menu-item">
                     <a class="menu-link {{ Route::is('mechanic.*') ? 'active' : '' }}" href="
-                                    {{-- {{ route('jurusan.index') }} --}}
+                                    {{ route('mechanic.index') }}
                                     ">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
