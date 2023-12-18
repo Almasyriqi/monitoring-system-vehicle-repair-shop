@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -44,7 +45,8 @@ class CustomerController extends Controller
     public function show(string $id)
     {
         $customer = Customer::find($id);
-        return view('customers.show', compact('customer'));
+        $vehicles = Vehicle::where('customer_id', $customer->id)->get();
+        return view('customers.show', compact('customer', 'vehicles'));
     }
 
     /**
