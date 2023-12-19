@@ -100,7 +100,7 @@
                 </div>
                 <div class="menu-item">
                     <a class="menu-link {{ Route::is('part.*') ? 'active' : '' }}" href="
-                                    {{-- {{ route('jurusan.index') }} --}}
+                                    {{ route('part.index') }}
                                     ">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
