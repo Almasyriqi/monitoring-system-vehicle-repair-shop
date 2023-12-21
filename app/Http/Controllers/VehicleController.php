@@ -90,4 +90,21 @@ class VehicleController extends Controller
             return back()->withErrors("Unable to delete a vehicle because the vehicle data is already connected to other data");
         }
     }
+
+    public function getVehicleByCustomer(Request $request)
+    {
+        $vehicles = Vehicle::where([
+            ['model', 'like', '%' . $request->input('search', '') . '%'],
+            ['customer_id', $request->customer_id]
+        ])->get();
+
+        $data = [];
+        foreach ($vehicles as $v) {
+            $data[] = [
+                'id' => $v->id,
+                'text' => $v->model . " (" . $v->type_text . ")"
+            ];
+        }
+        return response()->json(['results' => $data]);
+    }
 }

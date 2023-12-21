@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,6 +32,12 @@ class Repair extends Model
     }
 
     public function payment() {
-        return $this->hasOne(Payment::class, 'payment_id');
+        return $this->hasOne(Payment::class, 'id');
+    }
+
+    public function getDateRepairAttribute()
+    {
+        $date_repair = $this->repair_date ? Carbon::parse($this->repair_date)->locale('id')->isoFormat('D MMMM Y') : "-";
+        return $date_repair;
     }
 }

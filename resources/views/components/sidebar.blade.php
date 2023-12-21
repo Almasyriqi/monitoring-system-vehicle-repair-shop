@@ -114,7 +114,7 @@
                 </div>
                 <div class="menu-item">
                     <a class="menu-link {{ Route::is('repair.*') ? 'active' : '' }}" href="
-                                    {{-- {{ route('jurusan.index') }} --}}
+                                    {{ route('repair.index') }}
                                     ">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -131,24 +131,4 @@
             </div>
         </div>
     </div>
-    {{-- <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
-        <form action="
-        {{ route('logout') }}
-        " method="POST" id="logout-form">
-            @csrf
-            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                class="btn btn-flex flex-center btn-primary overflow-hidden text-nowrap px-0 h-40px w-100"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click">
-                <span class="btn-label">Logout</span> &nbsp;
-                <span class="svg-icon btn-icon svg-icon-2 m-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M20 12h-9.5m7.5 3l3-3l-3-3m-5-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2v-1" />
-                    </svg>
-                </span>
-            </a>
-        </form>
-    </div> --}}
 </div>
