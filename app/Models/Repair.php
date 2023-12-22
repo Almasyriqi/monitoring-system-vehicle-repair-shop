@@ -32,7 +32,7 @@ class Repair extends Model
     }
 
     public function payment() {
-        return $this->hasOne(Payment::class, 'id');
+        return $this->hasOne(Payment::class, 'repair_id');
     }
 
     public function getDateRepairAttribute()

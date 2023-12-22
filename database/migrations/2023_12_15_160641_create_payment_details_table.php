@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('payment_id')->references('id')->on('payments'); 
             $table->unsignedBigInteger('part_id')->nullable(); 
             $table->foreign('part_id')->references('id')->on('parts'); 
-            $table->integer('quantity')->default(0);
+            $table->double('quantity')->default(0);
             $table->double('amount')->default(0)->comment('parts price * quantity');
             $table->text('note')->nullable();
             $table->timestamps();

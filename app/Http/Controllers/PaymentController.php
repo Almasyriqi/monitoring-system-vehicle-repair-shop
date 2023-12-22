@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Part;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\Repair;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +23,14 @@ class PaymentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $repair = Repair::find($request->repair_id);
+        $vehicle = $repair->vehicle->name . " (" . $repair->vehicle->type_text . ")";
+        $parts = $parts = Part::where([['stock', '>', 0], ['type', $repair->vehicle->type]])->get();
+        $constraint_min_date = Carbon::parse($repair->repair_date)->format('m/d/Y');
+        $process_time = Carbon::parse($repair->start_time)->floatDiffInHours($repair->end_time);
+        return view('repairs.payment', compact('repair', 'vehicle', 'parts', 'process_time', 'constraint_min_date'));
     }
 
     /**
@@ -31,7 +38,55 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            // new payment data
+            $payment = new Payment();
+            $payment->repair_id = $request->repair_id;
+            $payment->total = $request->total;
+            $payment->payment_date = $request->payment_date;
+            $payment->save();
+
+            // new service payment detail data
+            $service_amount = str_replace('Rp ', '', $request->service_amount);
+            $service_amount = str_replace('.', '', $service_amount);
+            $service_amount = intval($service_amount);
+            $service_payment = new PaymentDetail();
+            $service_payment->payment_id = $payment->id;
+            $service_payment->quantity = $request->process_time;
+            $service_payment->amount = $service_amount;
+            $service_payment->note = 'service cost';
+            $service_payment->save();
+
+            foreach ($request->repeater as $item) {
+                if ($item['part_id'] != null) {
+                    // get number of amount
+                    $amount = str_replace('Rp ', '', $item['amount']);
+                    $amount = str_replace('.', '', $amount);
+                    $amount = intval($amount);
+
+                    // new payment detail data
+                    $payment_detail = new PaymentDetail();
+                    $payment_detail->payment_id = $payment->id;
+                    $payment_detail->part_id = $item['part_id'];
+                    $payment_detail->quantity = $item['quantity'];
+                    $payment_detail->amount = $amount;
+                    $payment_detail->note = $item['note'];
+                    $payment_detail->save();
+
+                    // update stock spare part
+                    $part = Part::find($item['part_id']);
+                    $part->stock = $part->stock - $item['quantity'];
+                    $part->save();
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('repair.show', $request->repair_id)->with('success', 'Success add payment data');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors($th->getMessage());
+        }
     }
 
     /**
@@ -57,10 +112,17 @@ class PaymentController extends Controller
     {
         DB::beginTransaction();
         try {
+            // update payment data
             $payment = Payment::find($id);
             $payment->total = $request->total;
             $payment->payment_date = $request->payment_date;
             $payment->save();
+
+            // update service payment
+            $service_payment = PaymentDetail::find($request->service_detail_id);
+            $service_payment->quantity = $request->process_time;
+            $service_payment->amount = $request->service_amount;
+            $service_payment->save();
 
             // check detail id
             $id_details = [];

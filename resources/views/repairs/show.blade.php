@@ -25,7 +25,7 @@
         </div>
         <div class="d-flex align-items-center gap-2 gap-lg-3">
             @if ($repair->payment == null)
-            <a href="{{route('payment.create')}}" class="btn btn-sm btn-primary"><i class="bi bi-credit-card"></i> Payment</a>
+            <a href="{{route('payment.create', ['repair_id'=>$repair->id])}}" class="btn btn-sm btn-primary"><i class="bi bi-credit-card"></i> Payment</a>
             @endif
             <button type="button" class="btn btn-sm btn-primary" id="edit">
                 <i class="bi bi-pencil-fill"></i> Edit
@@ -189,6 +189,7 @@
                     </div>
 
                     <div class="mb-5">
+                        {{$process_time}}
                         <div class="row">
                             <div class="col-md-4">
                                 <Label class="form-label fs-6 fw-bold mt-2 mb-3">Service Charge</Label>
@@ -197,9 +198,10 @@
                                 <input type="hidden" name="service_detail_id" value="{{$repair->payment->paymentDetails->first()->id ?? null}}">
                             </div>
                             <div class="col-md-4">
-                                <Label class="form-label required fs-6 fw-bold mt-2 mb-3">Process Time (hour)</Label>
-                                <input type="number" name="process_time" id="process_time" class="form-control" required
-                                    value="{{$repair->payment->paymentDetails->first()->quantity ?? 0}}">
+                                <Label class="form-label fs-6 fw-bold mt-2 mb-3">Process Time (hour)</Label>
+                                <input type="number" name="process" id="process" class="form-control" disabled
+                                    value="{{$process_time ?? 0}}">
+                                <input type="hidden" name="process_time" id="process_time" value="{{$process_time ?? 0}}">
                             </div>
                             <div class="col-md-4">
                                 <Label class="form-label required fs-6 fw-bold mt-2 mb-3">Amount</Label>
@@ -294,6 +296,18 @@
 
 @push('scripts')
 <script>
+    const calculateTime = () =>{
+        var start = $('#start_time').val();
+        var end = $('#end_time').val();
+        var start_time = new Date(start);
+        var end_time = new Date(end);
+
+        var time_difference = end_time.getTime() - start_time.getTime();
+        var hours_difference = time_difference / (1000 * 60 * 60);
+        $('#process_time').val(hours_difference);
+        $('#process').val(hours_difference);
+    }
+
     $("#start_time").daterangepicker({
         timePicker: true,
         singleDatePicker: true,
@@ -324,7 +338,11 @@
                 format: "Y-M-D H:mm",
             }
         });
-        fillPeriod();
+        calculateTime();
+    });
+
+    $('#end_time').on('change', function(){
+        calculateTime();
     });
 
     // function get data when select2 changes
@@ -363,13 +381,18 @@
     priceFormat();
 
     $(document).ready(function(){
-        var total_payment = formatRupiah($('#total_payment').val(), 'Rp ');
-        $('#total_payment').val(total_payment);
-        var service_amount = formatRupiah($('#service_amount').val(), 'Rp ');
-        $('#service_amount').val(service_amount);
+        console.log("{{$repair->payment}}");
+        if("{{$repair->payment}}" != ""){
+            var total_payment = formatRupiah($('#total_payment').val(), 'Rp ');
+            $('#total_payment').val(total_payment);
+            var service_amount = formatRupiah($('#service_amount').val(), 'Rp ');
+            $('#service_amount').val(service_amount);
+        }
     });
 
-    convertRupiah('service_amount');
+    if("{{$repair->payment}}" != ""){
+        convertRupiah('service_amount');
+    }
 
     // function for enable edit form
     const enableForm = () => {
@@ -384,7 +407,6 @@
         $('#issue').attr('disabled', false);
 
         $('#payment_date').attr('disabled', false);
-        $('#process_time').attr('disabled', false);
         $('#service_amount').attr('disabled', false);
         $('.part').attr('disabled', false);
         $('.quantity').attr('disabled', false);
@@ -412,7 +434,6 @@
         $('#issue').attr('disabled', true);
 
         $('#payment_date').attr('disabled', true);
-        $('#process_time').attr('disabled', true);
         $('#service_amount').attr('disabled', true);
         $('.part').attr('disabled', true);
         $('.quantity').attr('disabled', true);
@@ -486,7 +507,9 @@
 
     // always calculate subtotal when mouse move on card
     $('.card').on('mousemove', function(){
-        calculateTotal();        
+        if("{{$repair->payment}}" != ""){
+            calculateTotal();       
+        } 
     });
 
     $('.amount').on('keyup', function(){

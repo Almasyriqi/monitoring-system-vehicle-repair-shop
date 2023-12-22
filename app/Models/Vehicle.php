@@ -9,6 +9,9 @@ class Vehicle extends Model
 {
     use HasFactory;
 
+    const CAR = 'car';
+    const MOTORBIKE = 'motorbike';
+
     protected $fillable = [
         'customer_id',
         'model',

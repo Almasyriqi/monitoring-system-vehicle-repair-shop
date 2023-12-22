@@ -53,11 +53,12 @@ class RepairController extends Controller
     {
         $customers = Customer::all();
         $mechanics = Mechanic::all();
-        $parts = Part::all();
         $repair = Repair::find($id);
+        $parts = Part::where([['stock', '>', 0], ['type', $repair->vehicle->type]])->get();
         $constraint_min_date = Carbon::parse($repair->repair_date)->format('m/d/Y');
         $payment_date = $repair->payment ? Carbon::parse($repair->payment->payment_date)->format('Y-m-d') : Carbon::parse(now())->format('Y-m-d');
-        return view('repairs.show', compact('customers', 'mechanics', 'parts', 'repair', 'constraint_min_date', 'payment_date'));
+        $process_time = Carbon::parse($repair->start_time)->floatDiffInHours($repair->end_time);
+        return view('repairs.show', compact('customers', 'mechanics', 'parts', 'repair', 'constraint_min_date', 'payment_date', 'process_time'));
     }
 
     /**
