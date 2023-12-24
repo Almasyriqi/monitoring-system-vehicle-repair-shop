@@ -222,17 +222,6 @@
             text: 'Loading...'
         },
         labels: ['Car In Progress', 'Car Complete', 'Motorbike In Progress', 'Motorbike Complete'],
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 200
-                },
-                legend: {
-                    position: 'bottom'
-                }
-            }
-        }]
     };
 
     var chart_pie = new ApexCharts(document.querySelector("#pie_chart"), options_pie);
@@ -416,7 +405,7 @@
         const getBarData = () =>{
             getDataBar(getColorMode(mode))
         }
-        setInterval(getBarData, 60000);
+        setInterval(getBarData, 61000);
     });
 
     // change mode 
@@ -793,7 +782,6 @@
         var url = '{{route("average.time")}}';
 
         $.getJSON(url, function(response) {
-            console.log(response);
             chart_average.updateOptions(getOptionsTime(getColorMode(KTThemeMode.getMode()), response));
             $('.apexcharts-menu-item').css({color: "black"});
         });
@@ -805,7 +793,7 @@
         const getAverageData = () =>{
             getDataAverage(getColorMode(mode))
         }
-        setInterval(getAverageData, 60000);
+        setInterval(getAverageData, 62000);
     });
 
     // Script for table stock parts
