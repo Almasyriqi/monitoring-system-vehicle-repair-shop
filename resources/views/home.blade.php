@@ -261,7 +261,11 @@
     }
 
     $(document).ready(function () { 
-        getData();
+        var data_status = {{$data_status}};
+        chart_pie.updateSeries(data_status);
+        for (let index = 0; index < 4; index++) {
+            charts_status[index].updateSeries([data_status[index]]);
+        }
         setInterval(getData, 60000);
     });
 </script>
@@ -404,15 +408,29 @@
     const getDataBar = (color) =>{
         var url = '{{route("complete.repairs")}}';
 
-        $.getJSON(url, function(response) {
-            chart.updateOptions(getBarOptions(color, response.car, response.motor, response.date));
-            $('.apexcharts-menu-item').css({color: "black"});
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            success: function (response) {
+                // Handle the successful response here
+                chart.updateOptions(getBarOptions(color, response.car, response.motor, response.date));
+                $('.apexcharts-menu-item').css({color: "black"});
+            },
+            error: function (error) {
+                // Handle any errors that occurred during the request
+                console.error('Error fetching data:', error);
+            }
         });
     }
 
-    $(document).ready(function () { 
+    window.onload = function() {
         var mode = KTThemeMode.getMode();
         getDataBar(getColorMode(mode));
+    };
+
+    $(document).ready(function () { 
+        var mode = KTThemeMode.getMode();
         const getBarData = () =>{
             getDataBar(getColorMode(mode))
         }
@@ -573,10 +591,20 @@
     const getDataRevenue = (color) => {
         var division = $('#division').val();
         var route = "/getRevenueData?type="+division;
-        $.getJSON(route, function(response) {
-            chart_total_revenue.updateOptions(getRevenueOptions(response.total_payment_data, color));
-            chart_revenue_division.updateOptions(getRevenueOptions(response.total_revenue_data, color));
-            $('.apexcharts-menu-item').css({color: "black"});
+        $.ajax({
+            type: 'GET',
+            url: route,
+            dataType: 'json',
+            success: function (response) {
+                // Handle the successful response here
+                chart_total_revenue.updateOptions(getRevenueOptions(response.total_payment_data, color));
+                chart_revenue_division.updateOptions(getRevenueOptions(response.total_revenue_data, color));
+                $('.apexcharts-menu-item').css({color: "black"});
+            },
+            error: function (error) {
+                // Handle any errors that occurred during the request
+                console.error('Error fetching data:', error);
+            }
         });
     }
 
@@ -663,8 +691,18 @@
     const getDataMechanic = () => {
         var mechanic = $('#mechanic').val();
         var route = "/getMechanicEfficient?mechanic_id="+mechanic;
-        $.getJSON(route, function(response) {
-            chart_mechanic.updateSeries(response);
+        $.ajax({
+            type: 'GET',
+            url: route,
+            dataType: 'json',
+            success: function (response) {
+                // Handle the successful response here
+                chart_mechanic.updateSeries(response);
+            },
+            error: function (error) {
+                // Handle any errors that occurred during the request
+                console.error('Error fetching data:', error);
+            }
         });
     }
 
@@ -792,9 +830,19 @@
     const getDataAverage = (color) =>{
         var url = '{{route("average.time")}}';
 
-        $.getJSON(url, function(response) {
-            chart_average.updateOptions(getOptionsTime(getColorMode(KTThemeMode.getMode()), response));
-            $('.apexcharts-menu-item').css({color: "black"});
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            success: function (response) {
+                // Handle the successful response here
+                chart_average.updateOptions(getOptionsTime(getColorMode(KTThemeMode.getMode()), response));
+                $('.apexcharts-menu-item').css({color: "black"});
+            },
+            error: function (error) {
+                // Handle any errors that occurred during the request
+                console.error('Error fetching data:', error);
+            }
         });
     }
 

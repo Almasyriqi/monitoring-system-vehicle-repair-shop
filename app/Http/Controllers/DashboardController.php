@@ -16,7 +16,9 @@ class DashboardController extends Controller
     {
         $parts = Part::all();
         $mechanics = Mechanic::all();
-        return view('home', compact('parts', 'mechanics'));
+        $data_status = collect($this->getDataStatus()->original);
+        $average_time = collect($this->getAverageTime()->original);
+        return view('home', compact('parts', 'mechanics', 'data_status', 'average_time'));
     }
 
     public function getDataStatus()
