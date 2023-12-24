@@ -222,6 +222,17 @@
             text: 'Loading...'
         },
         labels: ['Car In Progress', 'Car Complete', 'Motorbike In Progress', 'Motorbike Complete'],
+        responsive: [{
+            breakpoint: 880,
+            options: {
+                chart: {
+                    height: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
     };
 
     var chart_pie = new ApexCharts(document.querySelector("#pie_chart"), options_pie);
