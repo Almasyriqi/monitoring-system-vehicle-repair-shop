@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('repair_id')->nullable(); 
             $table->foreign('repair_id')->references('id')->on('repairs'); 
             $table->double('total')->default(0);
-            $table->dateTime('payment_date');
+            $table->date('payment_date');
             $table->timestamps();
         });
     }

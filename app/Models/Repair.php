@@ -40,4 +40,14 @@ class Repair extends Model
         $date_repair = $this->repair_date ? Carbon::parse($this->repair_date)->locale('id')->isoFormat('D MMMM Y') : "-";
         return $date_repair;
     }
+
+    public function getProcessTimeAttribute()
+    {
+        if($this->start_time != null && $this->end_time != null){
+            $process_time = Carbon::parse($this->start_time)->floatDiffInHours($this->end_time);
+        } else {
+            $process_time = 0;
+        }
+        return $process_time;
+    }
 }
