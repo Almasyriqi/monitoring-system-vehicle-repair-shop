@@ -5,52 +5,60 @@
     <div class="container mt-7">
         <div class="row justify-content-center">
             <div class="col-md-3">
-                <div class="card shadow-sm">
-                    <div class="card-header justify-content-center">
-                        <div class="card-title">
-                            <h2>Car In Progress</h2>
+                <a href="{{route('repair.index', ['car_progress'=>'1'])}}">
+                    <div class="card shadow-sm">
+                        <div class="card-header justify-content-center">
+                            <div class="card-title">
+                                <h2>Car In Progress</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div id="car_ongoing"></div>
                         </div>
                     </div>
-                    <div class="card-body pt-0">
-                        <div id="car_ongoing"></div>
-                    </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-3">
-                <div class="card shadow-sm">
-                    <div class="card-header justify-content-center">
-                        <div class="card-title">
-                            <h2>Car Complete</h2>
+                <a href="{{route('repair.index', ['car_complete'=>'1'])}}">
+                    <div class="card shadow-sm">
+                        <div class="card-header justify-content-center">
+                            <div class="card-title">
+                                <h2>Car Complete</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div id="car_complete"></div>
                         </div>
                     </div>
-                    <div class="card-body pt-0">
-                        <div id="car_complete"></div>
-                    </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-3">
-                <div class="card shadow-sm">
-                    <div class="card-header justify-content-center">
-                        <div class="card-title">
-                            <h2>Motorbike In Progress</h2>
+                <a href="{{route('repair.index', ['motor_progress'=>'1'])}}">
+                    <div class="card shadow-sm">
+                        <div class="card-header justify-content-center">
+                            <div class="card-title">
+                                <h2>Motorbike In Progress</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div id="motor_ongoing"></div>
                         </div>
                     </div>
-                    <div class="card-body pt-0">
-                        <div id="motor_ongoing"></div>
-                    </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-3">
-                <div class="card shadow-sm">
-                    <div class="card-header justify-content-center">
-                        <div class="card-title">
-                            <h2>Motorbike Complete</h2>
+                <a href="{{route('repair.index', ['motor_complete'=>'1'])}}">
+                    <div class="card shadow-sm">
+                        <div class="card-header justify-content-center">
+                            <div class="card-title">
+                                <h2>Motorbike Complete</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div id="motor_complete"></div>
                         </div>
                     </div>
-                    <div class="card-body pt-0">
-                        <div id="motor_complete"></div>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="row justify-content-center mt-5">

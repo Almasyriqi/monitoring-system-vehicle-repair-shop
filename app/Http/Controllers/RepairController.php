@@ -15,9 +15,25 @@ class RepairController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $repairs = Repair::all();
+        $repairs = Repair::when($request->car_progress, function($query){
+            $query->where('status', 1)->whereHas('vehicle', function($query){
+                $query->where('type', 'car');
+            });
+        })->when($request->car_complete, function($query){
+            $query->where('status', 2)->whereHas('vehicle', function($query){
+                $query->where('type', 'car');
+            });
+        })->when($request->motor_progress, function($query){
+            $query->where('status', 1)->whereHas('vehicle', function($query){
+                $query->where('type', 'motorbike');
+            });
+        })->when($request->motor_complete, function($query){
+            $query->where('status', 2)->whereHas('vehicle', function($query){
+                $query->where('type', 'motorbike');
+            });
+        })->get();
         return view('repairs.index', compact('repairs'));
     }
 
