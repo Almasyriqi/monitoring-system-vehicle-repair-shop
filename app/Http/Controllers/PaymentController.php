@@ -40,17 +40,18 @@ class PaymentController extends Controller
     {
         DB::beginTransaction();
         try {
+            $service_amount = str_replace('Rp ', '', $request->service_amount);
+            $service_amount = str_replace('.', '', $service_amount);
+            $service_amount = intval($service_amount);
+
             // new payment data
             $payment = new Payment();
             $payment->repair_id = $request->repair_id;
-            $payment->total = $request->total;
+            $payment->total = $request->total ? $request->total : $service_amount;
             $payment->payment_date = $request->payment_date;
             $payment->save();
 
             // new service payment detail data
-            $service_amount = str_replace('Rp ', '', $request->service_amount);
-            $service_amount = str_replace('.', '', $service_amount);
-            $service_amount = intval($service_amount);
             $service_payment = new PaymentDetail();
             $service_payment->payment_id = $payment->id;
             $service_payment->quantity = $request->process_time;
