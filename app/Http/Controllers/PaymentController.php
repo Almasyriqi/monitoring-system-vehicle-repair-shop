@@ -46,6 +46,11 @@ class PaymentController extends Controller
             $service_amount = str_replace('.', '', $service_amount);
             $service_amount = intval($service_amount);
 
+            $repair = Repair::find($request->repair_id);
+            $repair->start_time = $request->start_time;
+            $repair->end_time = $request->end_time;
+            $repair->save();
+
             // new payment data
             $payment = new Payment();
             $payment->repair_id = $request->repair_id;
