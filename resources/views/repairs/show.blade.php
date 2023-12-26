@@ -189,7 +189,6 @@
                     </div>
 
                     <div class="mb-5">
-                        {{$process_time}}
                         <div class="row">
                             <div class="col-md-4">
                                 <Label class="form-label fs-6 fw-bold mt-2 mb-3">Service Charge</Label>

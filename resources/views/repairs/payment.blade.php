@@ -269,7 +269,6 @@
     priceFormat();
 
     $(document).ready(function(){
-        $('#total').hide();
         var total_payment = formatRupiah($('#total_payment').val(), 'Rp ');
         $('#total_payment').val(total_payment);
         var service_amount = formatRupiah($('#service_amount').val(), 'Rp ');
