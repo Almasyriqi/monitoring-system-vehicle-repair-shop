@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPSTORM_META\type;
+
 class PaymentController extends Controller
 {
     /**
@@ -47,7 +49,7 @@ class PaymentController extends Controller
             // new payment data
             $payment = new Payment();
             $payment->repair_id = $request->repair_id;
-            $payment->total = $request->total ? $request->total : $service_amount;
+            $payment->total = $request->total != 'NaN' ? $request->total : $service_amount;
             $payment->payment_date = $request->payment_date;
             $payment->save();
 
