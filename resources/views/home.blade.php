@@ -438,9 +438,7 @@
 
     $(document).ready(function () { 
         var mode = KTThemeMode.getMode();
-        const getBarData = () =>{
-            getDataBar(getColorMode(mode))
-        }
+        getDataBar(getColorMode(mode));
     });
 
     // change mode 
