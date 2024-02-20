@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RealTimeMessage;
 use App\Models\Customer;
 use App\Models\Mechanic;
 use App\Models\Part;
@@ -59,6 +60,7 @@ class RepairController extends Controller
         $repair->repair_date = $request->repair_date;
         $repair->save();
 
+        event(new RealTimeMessage('status'));
         return redirect()->route('repair.index')->with('success', 'Success add new repair data');
     }
 
@@ -100,6 +102,7 @@ class RepairController extends Controller
         $repair->status = $request->status;
         $repair->save();
 
+        event(new RealTimeMessage('status'));
         return redirect()->route('repair.show', $id)->with('success', 'Success update repair data');
     }
 

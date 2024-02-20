@@ -270,17 +270,7 @@
 
     getData();
 
-    $(document).ready(function () { 
-        var data_status = {{$data_status}};
-        chart_pie.updateSeries(data_status);
-        for (let index = 0; index < 4; index++) {
-            charts_status[index].updateSeries([data_status[index]]);
-        }
-    });
-</script>
-
-{{-- Script for bar chart total completed repairs in last week --}}
-<script>
+    // Script for bar chart total completed repairs in last week
     var element = document.getElementById('bar_chart');
     var height = parseInt(KTUtil.css(element, 'height'));
     var labelColor = KTUtil.getCssVariableValue('--kt-gray-500');
@@ -411,7 +401,7 @@
         return options;
     }
 
-    var chart = new ApexCharts(element, getBarOptions(getColorMode(KTThemeMode.getMode()), [], [], []));
+    var chart = new ApexCharts(element, getBarOptions(getColorMode(mode), [], [], []));
     chart.render();
 
     const getDataBar = (color) =>{
@@ -436,11 +426,6 @@
     var mode = KTThemeMode.getMode();
     getDataBar(getColorMode(mode));
 
-    $(document).ready(function () { 
-        var mode = KTThemeMode.getMode();
-        getDataBar(getColorMode(mode));
-    });
-
     // change mode 
     $('a[data-kt-element="mode"]').on('click', function(){
         getDataBar(getColorMode($(this).attr('data-kt-value')));
@@ -449,19 +434,10 @@
     $('#kt_apexcharts_3').on('click', function(){
         $('.apexcharts-menu-item').css({color: "black"});
     });
-</script>
 
-{{-- Script for area chart total revenue and area chart revenue by division --}}
-<script>
+    // Script for area chart total revenue and area chart revenue by division
     var element_revenue = document.getElementById('revenue_chart');
     var element_area = document.getElementById('area_chart');
-    var height = parseInt(KTUtil.css(element, 'height'));
-    var labelColor = KTUtil.getCssVariableValue('--kt-gray-500');
-    var borderColor = KTUtil.getCssVariableValue('--kt-gray-200');
-    var baseColor = KTUtil.getCssVariableValue('--kt-primary');
-    var lightColor = KTUtil.getCssVariableValue('--kt-primary-light');
-    var green = KTUtil.getCssVariableValue('--kt-success');
-    var infoColor = KTUtil.getCssVariableValue('--kt-info');
 
     const getRevenueOptions = (data, color) => {
         var options = {
@@ -612,11 +588,6 @@
         });
     }
 
-    $(document).ready(function () { 
-        var mode = KTThemeMode.getMode();
-        getDataRevenue(getColorMode(mode));
-    });
-
     // change mode 
     $('a[data-kt-element="mode"]').on('click', function(){
         getDataRevenue(getColorMode($(this).attr('data-kt-value')));
@@ -709,10 +680,6 @@
             }
         });
     }
-
-    $(document).ready(function(){
-        getDataMechanic();
-    });
 
     $('#mechanic').on('change', function(){
         getDataMechanic();
@@ -850,11 +817,6 @@
         });
     }
 
-    $(document).ready(function () { 
-        var mode = KTThemeMode.getMode();
-        getDataAverage(getColorMode(mode));
-    });
-
     // Script for table stock parts
     $("#table").DataTable({
         "searching": true,
@@ -863,5 +825,28 @@
         "autoWidth": false,
         "responsive": true,
     });
+
+    $(document).ready(function () { 
+        var mode = KTThemeMode.getMode();
+        getDataBar(getColorMode(mode));
+        getDataRevenue(getColorMode(mode));
+        getDataMechanic();
+        getDataAverage(getColorMode(mode));
+        var data_status = {{$data_status}};
+        chart_pie.updateSeries(data_status);
+        for (let index = 0; index < 4; index++) {
+            charts_status[index].updateSeries([data_status[index]]);
+        }
+    });
+
+    window.onload=function(){
+        Echo.channel('events')
+        .listen('RealTimeMessage', (e) => {
+            console.log('RealTimeMessage: ' + e.message);
+            if(e.message == 'status'){
+                getData();
+            }
+        });
+    };
 </script>
 @endpush

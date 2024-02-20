@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RealTimeMessage;
 use App\Models\Customer;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::all();
+        event(new RealTimeMessage('Hello World! I am an event 😄'));
         return view('customers.index', compact('customers'));
     }
 
