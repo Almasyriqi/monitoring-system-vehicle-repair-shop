@@ -268,13 +268,14 @@
         });
     }
 
+    getData();
+
     $(document).ready(function () { 
         var data_status = {{$data_status}};
         chart_pie.updateSeries(data_status);
         for (let index = 0; index < 4; index++) {
             charts_status[index].updateSeries([data_status[index]]);
         }
-        setInterval(getData, 60000);
     });
 </script>
 
@@ -432,17 +433,14 @@
         });
     }
 
-    window.onload = function() {
-        var mode = KTThemeMode.getMode();
-        getDataBar(getColorMode(mode));
-    };
+    var mode = KTThemeMode.getMode();
+    getDataBar(getColorMode(mode));
 
     $(document).ready(function () { 
         var mode = KTThemeMode.getMode();
         const getBarData = () =>{
             getDataBar(getColorMode(mode))
         }
-        setInterval(getBarData, 61000);
     });
 
     // change mode 
@@ -857,10 +855,6 @@
     $(document).ready(function () { 
         var mode = KTThemeMode.getMode();
         getDataAverage(getColorMode(mode));
-        const getAverageData = () =>{
-            getDataAverage(getColorMode(mode))
-        }
-        setInterval(getAverageData, 62000);
     });
 
     // Script for table stock parts
