@@ -25,7 +25,21 @@
 | 🗂️ [Struktur Project](#️-struktur-project) | 🧬 [Skema Database](#-skema-database) | ⚙️ [Prasyarat](#️-prasyarat) |
 | 🚀 [Instalasi](#-instalasi) | ▶️ [Menjalankan Project](#️-menjalankan-project) | 📡 [Konfigurasi Real-Time](#-konfigurasi-real-time) |
 | 🗺️ [Daftar Route](#️-daftar-route) | 🧪 [Testing](#-testing) | 🩺 [Troubleshooting](#-troubleshooting) |
-| 💡 [Saran Pengembangan](#-saran-pengembangan) | 📄 [Lisensi](#-lisensi) | |
+| 💡 [Saran Pengembangan](#-saran-pengembangan) | 📚 [Dokumentasi](#-dokumentasi) | 📄 [Lisensi](#-lisensi) |
+
+---
+
+## 📚 Dokumentasi
+
+Dokumentasi lengkap sistem tersedia di folder **[`docs/`](docs/)**:
+
+| Dokumen | Isi |
+|---|---|
+| 📘 **[SRS.md](docs/SRS.md)** | *Software Requirement Specification* format IEEE 830 — kebutuhan fungsional bernomor, kebutuhan non-fungsional, kamus data, roadmap, dan catatan temuan |
+| 📋 **[FEATURES.md](docs/FEATURES.md)** | Daftar seluruh fitur berikut statusnya (✅ / ⚠️ / ❌), tertaut ke kode dan nomor kebutuhan SRS |
+| 🗺️ **[FLOWMAP.md](docs/FLOWMAP.md)** | Tujuh diagram alur proses bisnis dan alur sistem |
+
+> 💡 Ingin tahu fitur mana yang sudah jalan dan mana yang belum? Mulai dari **[ringkasan cakupan fitur](docs/FEATURES.md#-ringkasan-cakupan)**.
 
 ---
 
@@ -49,7 +63,7 @@ Dashboard menyajikan enam sudut pandang data sekaligus:
 - **Area chart** total pendapatan 30 hari terakhir + pendapatan per divisi.
 - **Gauge chart** efisiensi mekanik (servis selesai ÷ total jam kerja).
 - **Bar chart** rata-rata waktu pengerjaan mobil vs motor.
-- ⚡ **Auto-update via WebSocket** — begitu data servis dibuat/diubah, event `RealTimeMessage` disiarkan dan seluruh chart menarik data terbaru.
+- ⚡ **Auto-update via WebSocket** — begitu data servis dibuat/diubah, event `RealTimeMessage` disiarkan dan **kartu status beserta pie chart** langsung memperbarui diri tanpa refresh. *(Grafik tren, pendapatan, efisiensi, dan rata-rata waktu baru ikut berubah setelah halaman disegarkan — lihat [catatan B-6](docs/SRS.md#lampiran-b--catatan-implementasi--temuan).)*
 - 🌗 **Dark & light mode** — warna chart ikut menyesuaikan tema aktif.
 
 ### 🗃️ Modul Manajemen Data (CRUD)
