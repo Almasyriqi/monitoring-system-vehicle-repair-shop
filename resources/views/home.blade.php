@@ -280,6 +280,16 @@
     var green = KTUtil.getCssVariableValue('--kt-success');
     var infoColor = KTUtil.getCssVariableValue('--kt-info');
 
+    // KTThemeMode diinisialisasi pada DOMContentLoaded, sedangkan skrip ini
+    // berjalan saat dokumen masih diurai. Memanggil KTThemeMode.getMode() di
+    // sini melempar galat dan menghentikan seluruh skrip di bawahnya, sehingga
+    // mode dibaca dari atribut data-theme yang sudah disetel layout di <head>.
+    const getThemeMode = () => {
+        const attr = document.documentElement.getAttribute('data-theme');
+        if (attr) return attr;
+        try { return KTThemeMode.getMode(); } catch (e) { return 'light'; }
+    }
+
     const getColorMode = (mode) =>{
         var color = 'black';
         if(mode == 'dark'){
@@ -401,7 +411,7 @@
         return options;
     }
 
-    var chart = new ApexCharts(element, getBarOptions(getColorMode(mode), [], [], []));
+    var chart = new ApexCharts(element, getBarOptions(getColorMode(getThemeMode()), [], [], []));
     chart.render();
 
     const getDataBar = (color) =>{
@@ -423,7 +433,7 @@
         });
     }
 
-    var mode = KTThemeMode.getMode();
+    var mode = getThemeMode();
     getDataBar(getColorMode(mode));
 
     // change mode 
@@ -562,10 +572,10 @@
         return options;
     }
 
-    var chart_total_revenue = new ApexCharts(element_revenue, getRevenueOptions([], getColorMode(KTThemeMode.getMode())));
+    var chart_total_revenue = new ApexCharts(element_revenue, getRevenueOptions([], getColorMode(getThemeMode())));
     chart_total_revenue.render();
 
-    var chart_revenue_division = new ApexCharts(element_area, getRevenueOptions([], getColorMode(KTThemeMode.getMode())));
+    var chart_revenue_division = new ApexCharts(element_area, getRevenueOptions([], getColorMode(getThemeMode())));
     chart_revenue_division.render();
     
     const getDataRevenue = (color) => {
@@ -599,7 +609,7 @@
 
     // on change division
     $('#division').on('change', function(){
-        var mode = KTThemeMode.getMode();
+        var mode = getThemeMode();
         getDataRevenue(getColorMode(mode));
     });
 
@@ -795,7 +805,7 @@
     }
 
     var element_average = document.getElementById('average_chart');
-    var chart_average = new ApexCharts(element_average, getOptionsTime(getColorMode(KTThemeMode.getMode()), []));
+    var chart_average = new ApexCharts(element_average, getOptionsTime(getColorMode(getThemeMode()), []));
     chart_average.render();
 
     const getDataAverage = (color) =>{
@@ -807,7 +817,7 @@
             dataType: 'json',
             success: function (response) {
                 // Handle the successful response here
-                chart_average.updateOptions(getOptionsTime(getColorMode(KTThemeMode.getMode()), response));
+                chart_average.updateOptions(getOptionsTime(getColorMode(getThemeMode()), response));
                 $('.apexcharts-menu-item').css({color: "black"});
             },
             error: function (error) {
@@ -827,7 +837,7 @@
     });
 
     $(document).ready(function () { 
-        var mode = KTThemeMode.getMode();
+        var mode = getThemeMode();
         getDataBar(getColorMode(mode));
         getDataRevenue(getColorMode(mode));
         getDataMechanic();
