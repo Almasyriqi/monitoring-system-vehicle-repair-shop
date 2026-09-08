@@ -320,7 +320,7 @@ Keterangan status: ✅ Terimplementasi penuh · ⚠️ Terimplementasi sebagian
 | **Proses** | `efisiensi = (jumlah servis selesai ÷ total jam pengerjaan) × 100`, dibulatkan satu angka desimal |
 | **Keluaran** | Satu bilangan pada grafik *gauge* |
 | **Referensi** | `DashboardController@getMechanicEfficient` · route `GET /getMechanicEfficient` |
-| **Status** | ⚠️ Berpotensi galat pembagian nol — lihat [Lampiran B-2](#lampiran-b--catatan-implementasi--temuan) |
+| **Status** | ⚠️ Berpotensi galat pembagian nol — lihat [B-2](#lampiran-b--catatan-implementasi--temuan). Grafiknya sendiri sempat tidak pernah tampil hingga [B-7](#lampiran-b--catatan-implementasi--temuan) diperbaiki |
 
 #### `SRS-F-106` — Menghitung Rata-Rata Waktu Pengerjaan
 
@@ -342,7 +342,7 @@ Keterangan status: ✅ Terimplementasi penuh · ⚠️ Terimplementasi sebagian
 | **Proses** | Menjumlahkan kolom `total` pada tabel `payments` per tanggal |
 | **Keluaran** | JSON `{ total_payment_data, total_revenue_data }` berisi pasangan koordinat `{x, y}` |
 | **Referensi** | `DashboardController@getRevenueData` · route `GET /getRevenueData` |
-| **Status** | ⚠️ Deret per divisi belum tersaring jenis kendaraan — lihat [Lampiran B-1](#lampiran-b--catatan-implementasi--temuan) |
+| **Status** | ⚠️ Deret per divisi belum tersaring jenis kendaraan — lihat [B-1](#lampiran-b--catatan-implementasi--temuan). Grafiknya sendiri sempat tidak pernah tampil hingga [B-7](#lampiran-b--catatan-implementasi--temuan) diperbaiki |
 
 #### `SRS-F-108` — Menyesuaikan Warna Grafik dengan Mode Tampilan
 
@@ -796,6 +796,33 @@ event(new RealTimeMessage('Hello World! I am an event 😄'));
 Siaran ini terpicu setiap kali halaman daftar pelanggan dibuka. Muatannya diabaikan oleh pendengar di dashboard — yang hanya menanggapi pesan bernilai `status` — sehingga tidak menimbulkan kesalahan tampilan, namun tetap menghasilkan lalu lintas WebSocket yang tidak diperlukan.
 
 **Saran perbaikan:** hapus baris tersebut.
+
+### B-7 · Tiga grafik dashboard tidak pernah tampil — **sudah diperbaiki**
+
+**Terkait:** `SRS-F-105`, `SRS-F-106`, `SRS-F-107` · **Berkas:** `resources/views/home.blade.php` · **Dampak:** 🔴 Tinggi · **Status:** ✅ **Sudah diperbaiki**
+
+`KTThemeMode.getMode()` dipanggil di badan skrip dashboard, padahal bundel tema menjalankan `KTThemeMode.init()` di dalam `onDOMContentLoaded(...)`. Skrip dashboard berada di badan halaman sehingga dieksekusi **saat dokumen masih diurai** — sebelum `DOMContentLoaded`. Akibatnya pemanggilan itu melempar `TypeError: Cannot read properties of undefined (reading 'hasAttribute')`, dan **seluruh baris setelahnya dalam blok skrip yang sama tidak pernah dijalankan**.
+
+Bukti dari probe yang disisipkan tepat sebelum baris tersebut:
+
+```
+PROBE readyState=loading  KTThemeModeInit=undefined
+PAGE ERROR: Cannot read properties of undefined (reading 'hasAttribute')
+✅ #bar_chart                                     (didefinisikan sebelum baris bermasalah)
+❌ #revenue_chart  ❌ #mechanic_chart  ❌ #average_chart   (sesudahnya)
+```
+
+**Dampak bagi pengguna:** grafik *Total Revenue*, *Revenue by Division*, *Mechanic Efficiency*, dan *Average Repair Time* **selalu kosong**. Hanya kartu status, diagram lingkaran, dan grafik tren yang tampil. Bug bersifat deterministik — dialami setiap pengguna, bukan akibat lingkungan tertentu. Diuji pula dengan seluruh sumber daya CDN dipenuhi konten lokal: galat tetap muncul.
+
+**Perbaikan yang diterapkan:** ditambahkan helper `getThemeMode()` yang membaca atribut `data-theme` pada elemen akar — atribut yang sudah disetel skrip inline di `<head>` layout, jauh sebelum badan halaman diurai — dengan `KTThemeMode.getMode()` sebagai cadangan. Seluruh pemanggilan `KTThemeMode.getMode()` di `home.blade.php` diarahkan ke helper tersebut.
+
+Sekalian diperbaiki cacat sejalur: `getColorMode(mode)` pada pembuatan grafik batang dipanggil sebelum variabel `mode` terisi, sehingga selalu menerima `undefined` dan salah warna pada render pertama di mode gelap.
+
+**Terverifikasi setelah perbaikan:** nol `pageerror`; ketujuh elemen grafik tergambar; pergantian mode gelap tetap berfungsi (`data-theme` berubah, label sumbu menjadi putih).
+
+> ⚠️ **Koreksi atas dokumentasi sebelumnya.** Versi awal SRS dan FEATURES menyatakan keenam grafik dashboard berfungsi. Pernyataan itu keliru — disimpulkan dari pembacaan kode tanpa menjalankan aplikasi. Sejak temuan ini, `tools/capture-screenshots.mjs` menggagalkan penangkapan bila ada galat JavaScript di halaman, sehingga cacat serupa terdeteksi otomatis.
+
+---
 
 ### B-6 · Pembaruan real-time hanya mencakup dua dari enam indikator
 

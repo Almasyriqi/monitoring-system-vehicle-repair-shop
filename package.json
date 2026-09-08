@@ -3,12 +3,14 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "capture:docs": "node tools/capture-screenshots.mjs"
     },
     "devDependencies": {
         "axios": "^1.6.1",
         "laravel-echo": "^1.15.3",
         "laravel-vite-plugin": "^0.8.0",
+        "playwright": "^1.63.0",
         "pusher-js": "^8.4.0-rc2",
         "vite": "^4.0.0"
     }

@@ -38,6 +38,7 @@ Dokumentasi lengkap sistem tersedia di folder **[`docs/`](docs/)**:
 | 📘 **[SRS.md](docs/SRS.md)** | *Software Requirement Specification* format IEEE 830 — kebutuhan fungsional bernomor, kebutuhan non-fungsional, kamus data, roadmap, dan catatan temuan |
 | 📋 **[FEATURES.md](docs/FEATURES.md)** | Daftar seluruh fitur berikut statusnya (✅ / ⚠️ / ❌), tertaut ke kode dan nomor kebutuhan SRS |
 | 🗺️ **[FLOWMAP.md](docs/FLOWMAP.md)** | Tujuh diagram alur proses bisnis dan alur sistem |
+| 📖 **[MANUAL.md](docs/MANUAL.md)** | Manual penggunaan bergambar untuk petugas bengkel — 24 tangkapan layar disertai penjelasan tiap kolom dan tombol |
 
 > 💡 Ingin tahu fitur mana yang sudah jalan dan mana yang belum? Mulai dari **[ringkasan cakupan fitur](docs/FEATURES.md#-ringkasan-cakupan)**.
 

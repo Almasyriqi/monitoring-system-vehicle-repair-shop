@@ -57,6 +57,8 @@ Halaman utama sistem. Menyajikan enam indikator operasional bengkel yang seluruh
 | 1.8 | **Grafik pendapatan per divisi** | Pendapatan dipisahkan menurut jenis kendaraan | `GET /getRevenueData` | `DashboardController@getRevenueData` | `SRS-F-107` | ⚠️ |
 | 1.9 | **Penyesuaian warna tema** | Palet warna grafik mengikuti mode terang atau gelap | — | `resources/views/home.blade.php` | `SRS-F-108` | ✅ |
 
+> ✅ **Koreksi penting.** Fitur 1.5–1.8 sempat **tidak pernah tampil sama sekali** karena galat JavaScript yang menghentikan skrip dashboard di tengah jalan ([B-7](SRS.md#lampiran-b--catatan-implementasi--temuan)). Versi awal dokumen ini menyatakan keempatnya berfungsi — keliru, karena disimpulkan dari pembacaan kode tanpa menjalankan aplikasi. Bug tersebut kini sudah diperbaiki dan status di bawah sudah terverifikasi di aplikasi yang berjalan.
+>
 > ⚠️ **1.5** berpotensi menghasilkan `INF`/`NAN` bila mekanik belum punya jam kerja tercatat ([B-2](SRS.md#lampiran-b--catatan-implementasi--temuan)).
 > ⚠️ **1.8** saat ini menampilkan angka yang sama dengan 1.7 karena penjumlahannya belum tersaring jenis kendaraan ([B-1](SRS.md#lampiran-b--catatan-implementasi--temuan)).
 
@@ -224,6 +226,7 @@ Bukan fitur yang hilang, melainkan cacat pada fitur yang sudah ada. Rincian leng
 | [B-4](SRS.md#lampiran-b--catatan-implementasi--temuan) | Empat method pembayaran masih kosong | `PaymentController` | 🟡 |
 | [B-5](SRS.md#lampiran-b--catatan-implementasi--temuan) | Event debug tertinggal di daftar pelanggan | `CustomerController@index` | 🟡 |
 | [B-6](SRS.md#lampiran-b--catatan-implementasi--temuan) | Pembaruan real-time hanya mencakup 2 dari 6 indikator | `resources/views/home.blade.php` | 🟠 |
+| [B-7](SRS.md#lampiran-b--catatan-implementasi--temuan) | ~~Tiga grafik dashboard tidak pernah tampil~~ — **sudah diperbaiki** | `resources/views/home.blade.php` | ✅ |
 | — | Kueri di dalam perulangan pada endpoint dashboard | `DashboardController` | 🟠 |
 | — | Belum ada pengujian otomatis yang bermakna | `tests/` | 🟠 |
 
